@@ -58,9 +58,10 @@ public class ScanEventListener implements Listener {
       .filter(t -> t.hasEntry(targetPlayer.getName()))
       .findFirst();
 
-    String teamName = oTeam.map(Team::getDisplayName).orElse("");
     ChatColor chatColor = oTeam.map(Team::getColor).orElse(ChatColor.DARK_GRAY);
-    return chatColor + teamName + " " + targetPlayer.getDisplayName();
+    return oTeam.map(Team::getDisplayName)
+      .map(teamName -> chatColor + teamName + " " + targetPlayer.getDisplayName())
+      .orElseGet(() -> chatColor + targetPlayer.getDisplayName());
   }
 
   private String getRandomShit() {
