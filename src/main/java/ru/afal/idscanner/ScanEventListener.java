@@ -1,11 +1,18 @@
 package ru.afal.idscanner;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -36,9 +43,24 @@ public class ScanEventListener implements Listener {
 
       String message = targetPlayer.hasPermission("id.scanner.immune")
         ? ChatColor.YELLOW + "The Revealer looks puzzled... It whispers to you that this one appears as " + getRandomShit()
-        : ChatColor.YELLOW + "The Revealer whispers to you that this is " + ChatColor.DARK_AQUA + targetPlayer.getDisplayName();
+        : ChatColor.YELLOW + "The Revealer whispers to you that this is " + getPlayerName(targetPlayer);
       player.sendMessage(message);
     }
+  }
+
+  @NotNull
+  private String getPlayerName(Player targetPlayer) {
+    Optional<Team> oTeam = Optional.ofNullable(Bukkit.getServer().getScoreboardManager())
+      .map(ScoreboardManager::getMainScoreboard)
+      .map(Scoreboard::getTeams)
+      .orElse(Collections.emptySet())
+      .stream()
+      .filter(t -> t.hasEntry(targetPlayer.getName()))
+      .findFirst();
+
+    String teamName = oTeam.map(Team::getDisplayName).orElse("");
+    ChatColor chatColor = oTeam.map(Team::getColor).orElse(ChatColor.DARK_GRAY);
+    return chatColor + teamName + " " + targetPlayer.getDisplayName();
   }
 
   private String getRandomShit() {
