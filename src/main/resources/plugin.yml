@@ -1,6 +1,6 @@
 name: IDScanner
-version: ${project.version}
-main: ru.afal.idscanner.IDScanner
+version: '0.1'
+main: ru.afal.idscanner.IDScannerPlugin
 api-version: '1.15'
 authors: [afal007]
 description: Adds a new item ID Scanner. This item allows to identify Player if he is not immune.
@@ -8,7 +8,6 @@ description: Adds a new item ID Scanner. This item allows to identify Player if 
 commands:
   idscanner:
     usage: /idscanner <playerName>
-    permission: id.scan
     description: Adds ID Scanner to <playerName> inventory. If no <playerName> specified adds ID Scanner to current Player's inventory. If inverntory is full, spawns ID scanner in front of Player specified.
 
 permissions:

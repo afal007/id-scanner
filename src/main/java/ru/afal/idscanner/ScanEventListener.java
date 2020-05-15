@@ -5,7 +5,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
@@ -33,11 +35,28 @@ public class ScanEventListener implements Listener {
   };
   private static final AtomicInteger ATOMIC_INT = new AtomicInteger();
 
+//  @EventHandler
+//  public void onPlayerInteractEvent(PlayerInteractEvent event) {
+//    ItemMeta mainHandMeta = event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
+//    if (event.hasBlock() && mainHandMeta != null && mainHandMeta.equals(IDScanner.INSTANCE.getItemMeta())) {
+//      event.setCancelled(true);
+//    }
+//  }
+
+  @EventHandler
+  public void onBlockPlaceEvent(BlockPlaceEvent event) {
+    ItemMeta mainHandMeta = event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
+    if (mainHandMeta != null && mainHandMeta.equals(IDScanner.INSTANCE.getItemMeta())) {
+      event.setCancelled(true);
+    }
+  }
+
   @EventHandler
   public void onPlayerInteractEntityEvent(PlayerInteractAtEntityEvent event) {
     Player player = event.getPlayer();
+    ItemMeta mainHandMeta = player.getInventory().getItemInMainHand().getItemMeta();
     boolean isPlayerClicked = event.getRightClicked() instanceof Player;
-    boolean isIdScannerUsed = player.getInventory().getItemInMainHand() == IDScanner.INSTANCE;
+    boolean isIdScannerUsed = mainHandMeta != null && mainHandMeta.equals(IDScanner.INSTANCE.getItemMeta());
     if (isPlayerClicked && isIdScannerUsed) {
       Player targetPlayer = (Player) event.getRightClicked();
 

@@ -45,7 +45,7 @@ public class IDScannerCommandExecutor implements CommandExecutor {
     if (map.isEmpty()) {
       player.sendMessage(ChatColor.AQUA + "You feel as though something appeared in your backpack...");
     } else {
-      target.getWorld().dropItemNaturally(target.getLocation().add(1, 1, 0), IDScanner.INSTANCE);
+      target.getWorld().dropItemNaturally(target.getLocation().add(target.getLocation().getDirection()), IDScanner.INSTANCE);
       player.sendMessage(ChatColor.AQUA + "You feel as though something appeared in front of you...");
     }
 

@@ -16,5 +16,4 @@ repositories {
 dependencies {
     implementation group: 'org.jetbrains', name: 'annotations', version: '15.0'
     implementation group: 'org.bukkit', name: 'bukkit', 'version': '1.15.2-R0.1-SNAPSHOT'
-
 }
