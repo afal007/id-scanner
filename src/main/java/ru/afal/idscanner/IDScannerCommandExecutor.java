@@ -25,13 +25,14 @@ public class IDScannerCommandExecutor implements CommandExecutor {
     boolean isPlayer = sender instanceof Player;
     if (!isPlayer) {
       LOGGER.info("Non-player tried to use command (MonkaS)");
-      return false;
+      return true;
     }
 
     Player player = (Player) sender;
     if (!player.hasPermission("id.scan")) {
-      player.sendMessage(ChatColor.DARK_RED + "What are you playing at here, kid?");
-      return false;
+      player.damage(0.1);
+      player.sendMessage(ChatColor.DARK_RED + "You feel as though divine forces are too much for you to handle...");
+      return true;
     }
 
     Player target = args.length == 0 ? player : Bukkit.getPlayer(args[0]);
@@ -42,7 +43,7 @@ public class IDScannerCommandExecutor implements CommandExecutor {
 
     Map<Integer, ItemStack> map = target.getInventory().addItem(IDScanner.INSTANCE);
     if (map.isEmpty()) {
-      player.sendMessage(ChatColor.AQUA + "You feel as though something appeared in your pocket...");
+      player.sendMessage(ChatColor.AQUA + "You feel as though something appeared in your backpack...");
     } else {
       target.getWorld().dropItemNaturally(target.getLocation().add(1, 1, 0), IDScanner.INSTANCE);
       player.sendMessage(ChatColor.AQUA + "You feel as though something appeared in front of you...");

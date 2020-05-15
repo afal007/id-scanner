@@ -11,11 +11,12 @@ public class IDScanner extends ItemStack {
   public static final IDScanner INSTANCE = new IDScanner();
 
   private IDScanner() {
-    super(Material.BLACK_GLAZED_TERRACOTTA);
+    super(Material.JACK_O_LANTERN); // HEART_OF_THE_SEA, JACK_O_LANTERN, COMPARATOR
     ItemMeta itemMeta = getItemMeta();
     if (itemMeta != null) {
-      itemMeta.setDisplayName("ID Scanner"); // TODO: I want cooler name :(
-      itemMeta.setLore(Collections.singletonList("You feel as though this item can help you to identify the inhabitants of this realm..."));
+      itemMeta.setDisplayName("The Revealer");
+      itemMeta.setUnbreakable(true);
+      itemMeta.setLore(Collections.singletonList("You feel as though this creature can help you to identify the inhabitants of this realm..."));
       setItemMeta(itemMeta);
     }
   }

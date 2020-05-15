@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ScanEventListener implements Listener {
 
@@ -14,15 +15,16 @@ public class ScanEventListener implements Listener {
   private static final String[] RANDOM_SHIT_ARR = new String[]{
     "NaM",
     "Satan",
-    "Lord",
-    "$$##@@@#$@$@#$@",
-    "Chuck",
-    "Norris",
+    "Cum",
+    "!@#$^&*()",
+    "Your",
+    "Dad",
     "POOP",
     "Lole",
     "Omega",
     "*****"
   };
+  private static final AtomicInteger ATOMIC_INT = new AtomicInteger();
 
   @EventHandler
   public void onPlayerInteractEntityEvent(PlayerInteractAtEntityEvent event) {
@@ -33,14 +35,21 @@ public class ScanEventListener implements Listener {
       Player targetPlayer = (Player) event.getRightClicked();
 
       String message = targetPlayer.hasPermission("id.scanner.immune")
-        ? ChatColor.MAGIC + "It appears as though this is " + getRandomShit()
-        : ChatColor.DARK_AQUA + "It appears as though this is " + targetPlayer.getDisplayName();
+        ? ChatColor.YELLOW + "The Revealer looks puzzled... It whispers to you that this one appears as " + getRandomShit()
+        : ChatColor.YELLOW + "The Revealer whispers to you that this is " + ChatColor.DARK_AQUA + targetPlayer.getDisplayName();
       player.sendMessage(message);
     }
   }
 
   private String getRandomShit() {
-    int length = RANDOM_SHIT_ARR.length;
-    return RANDOM_SHIT_ARR[RANDOM.nextInt(length)] + " " + RANDOM_SHIT_ARR[RANDOM.nextInt(length)];
+    String name;
+    if (ATOMIC_INT.getAndIncrement() % 10 == 0) {
+      name = "Your Mom";
+    } else {
+      int length = RANDOM_SHIT_ARR.length;
+      name = RANDOM_SHIT_ARR[RANDOM.nextInt(length)] + " " + RANDOM_SHIT_ARR[RANDOM.nextInt(length)];
+    }
+
+    return ChatColor.MAGIC + name;
   }
 }
